@@ -272,6 +272,7 @@ class GameScene: SKScene {
         deleteRows(&deleteTileArray)
         
         if(deleteTileArray.isEmpty){
+            moveActionFlag = false
             return
         }
         
@@ -292,7 +293,7 @@ class GameScene: SKScene {
             let location = touch.locationInNode(self)
             touchedNode = self.nodeAtPoint(location)
             for node in self.board.children{
-                if(touchedNode == node as NSObject){
+                if(touchedNode == node as NSObject && !moveActionFlag){
                     touchedNode.alpha *= 0.5
                 }
             }
@@ -318,6 +319,7 @@ class GameScene: SKScene {
             let endedNode = self.nodeAtPoint(location)
             for node in self.board.children{
                 if(endedNode == node as NSObject && !moveActionFlag){
+                    moveActionFlag = true
                     deleteAndDropTile()
                     touchedNode.alpha *= 2
                 }
